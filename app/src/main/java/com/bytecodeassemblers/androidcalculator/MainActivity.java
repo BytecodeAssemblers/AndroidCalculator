@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
    private TextView calculatorDisplay;
    private String displayResult="0";
    private double number = 0;
-   private Button lastButton;
+   private Button lastOperation = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         buttonClearEverything = findViewById(R.id.clearEverything);
         buttonBackSpace = findViewById(R.id.backSpace);
         calculatorDisplay = findViewById(R.id.display);
+        lastOperation = null;
         updateScreen();
     }
     public void updateScreen(){
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         number = 0;
         updateScreen();
     }
-    public void percentage (View v){
+    public void percentage (View v) {
         double display = Float.parseFloat(calculatorDisplay.getText().toString());
         display = display/100;
         String result = String.valueOf(display);
@@ -78,11 +79,11 @@ public class MainActivity extends AppCompatActivity {
         String number = ((Button)v).getText().toString().trim();
         switch(number) {
             case ".":
-                if(!displayResult.contains("."))
+                if(!displayResult.contains(".")) //This part is done to make sure that only one floating point is allowed
                     displayResult += ".";
                 break;
             default:
-                if(displayResult.equals("0"))
+                if(displayResult.equals("0")) //And this to make sure that we do not have a zero prefix all the time
                     displayResult = number;
                 else
                     displayResult += number;
@@ -92,15 +93,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addition(View v) {
-        lastButton = (Button)v;
+        if(last)
         number += Double.valueOf(displayResult);
         displayResult = "0";
         updateScreen();
+        lastOperation = (Button)v;
     }
 
     public void equals(View v) {
-        lastButton.callOnClick();
-        displayResult = String.valueOf(number);
+        if(lastOperation != null)
+            if(!lastOperation.getText().toString().matches("[0-9]")) {
+                lastOperation.callOnClick(); // We want to make sure that when calling the equals method we execute the last operation with this very nifty function
+                displayResult = String.valueOf(number);
+            }
         updateScreen();
+        lastOperation = null;
     }
 }
