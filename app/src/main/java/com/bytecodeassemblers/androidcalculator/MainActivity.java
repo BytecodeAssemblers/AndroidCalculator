@@ -12,6 +12,8 @@ public class MainActivity extends AppCompatActivity {
             buttonNine, buttonZero, buttonDot, buttonAdd, buttonSub, buttonMul, buttonDiv, buttonEqual, buttonPercentage, buttonClearEverything, buttonBackSpace;
    private TextView calculatorDisplay;
    private String displayResult="0";
+   private double number = 0;
+   private Button lastButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,24 +52,55 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void BackSpace(View v){
-        String result = calculatorDisplay.getText().toString();
-        if(result == "0" || result.isEmpty()){
+        String result = calculatorDisplay.getText().toString().trim();
+        if(result == "0" || result.length() == 1){
+            displayResult = "0";
             updateScreen();
         }else {
             displayResult = result.substring(0, result.length() - 1);
             updateScreen();
         }
     }
-    public void ce (View v){
-
-        displayResult ="0";
+    public void ce(View v){
+        displayResult = "0";
+        number = 0;
         updateScreen();
     }
     public void percentage (View v){
-        float display = Float.parseFloat(calculatorDisplay.getText().toString());
+        double display = Float.parseFloat(calculatorDisplay.getText().toString());
         display = display/100;
         String result = String.valueOf(display);
-        displayResult=result;
+        displayResult = result;
+        updateScreen();
+    }
+
+    public void OnClickNum(View v) {
+        String number = ((Button)v).getText().toString().trim();
+        switch(number) {
+            case ".":
+                if(!displayResult.contains("."))
+                    displayResult += ".";
+                break;
+            default:
+                if(displayResult.equals("0"))
+                    displayResult = number;
+                else
+                    displayResult += number;
+                break;
+        }
+        updateScreen();
+    }
+
+    public void addition(View v) {
+        lastButton = (Button)v;
+        number += Double.valueOf(displayResult);
+        displayResult = "0";
+        updateScreen();
+    }
+
+    public void equals(View v) {
+        lastButton.callOnClick();
+        displayResult = String.valueOf(number);
         updateScreen();
     }
 }

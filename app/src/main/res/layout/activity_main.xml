@@ -54,6 +54,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:onClick="addition"
             android:text="+"
             android:textSize="25sp" />
     </LinearLayout>
@@ -214,6 +215,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#FFC107"
+            android:onClick="equals"
             android:text="="
             android:textSize="25sp" />
     </LinearLayout>
