@@ -93,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addition(View v) {
-        if(last)
         number += Double.valueOf(displayResult);
         displayResult = "0";
         updateScreen();
