@@ -68,11 +68,12 @@ public class MainActivityController {
         public void onClick(View v) {
             String buttonText = ((Button)v).getText().toString();
             if(buttonText.equals("=")) {
-                operatorsModel.walkoperatorVar();
+                operatorsModel.simpleEvaluate();
                 operatorsModel.setOperatorVar(String.valueOf(operatorsModel.getNumberVar()));
                 updateScreen(String.valueOf(operatorsModel.getNumberVar()));
             } else if(buttonText.equals("CE")) {
                 operatorsModel.setNumberVar(0);
+                operatorsModel.setOperatorVar("0");
                 updateScreen("0");
             } else if(buttonText.equals("C")) {
                 operatorsModel.subtractOperatorVar();
