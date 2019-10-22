@@ -1,10 +1,10 @@
 package com.bytecodeassemblers.androidcalculator;
-​
+
 import android.app.Activity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-​
+
 public class MainActivityController {
     private Button buttonOne;
     private Button buttonTwo;
@@ -28,18 +28,18 @@ public class MainActivityController {
     private TextView calculatorDisplay;
     private Operators operatorsModel;
     private Activity mainActivity;
-​
+
     MainActivityController(Activity mainAct) {
         this.operatorsModel = new Operators();
         this.mainActivity = mainAct;
         initializeComponents();
         updateScreen(String.valueOf(this.operatorsModel.getNumberVar()));
     }
-​
+
     public void updateScreen(String number){
         calculatorDisplay.setText(String.valueOf(number));
     }
-​
+
     public void initializeComponents(){
         (buttonOne = this.mainActivity.findViewById(R.id.one)).setOnClickListener(buttonClick);
         (buttonTwo = this.mainActivity.findViewById(R.id.two)).setOnClickListener(buttonClick);
@@ -62,7 +62,7 @@ public class MainActivityController {
         (buttonBackSpace = this.mainActivity.findViewById(R.id.backSpace)).setOnClickListener(buttonClick);
         calculatorDisplay = this.mainActivity.findViewById(R.id.display);
     }
-​
+
     private View.OnClickListener buttonClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
