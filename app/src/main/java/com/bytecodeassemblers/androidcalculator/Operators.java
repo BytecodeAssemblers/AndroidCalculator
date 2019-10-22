@@ -1,5 +1,8 @@
 package com.bytecodeassemblers.androidcalculator;
 
+import net.objecthunter.exp4j.Expression;
+import net.objecthunter.exp4j.ExpressionBuilder;
+
 public class Operators {
     private double numberVar = 0;
     private String operatorVar = "";
@@ -31,22 +34,8 @@ public class Operators {
         this.operatorVar += operatorVar;
     }
 
-    public void walkoperatorVar() {
-        final String WITH_DELIMITER = "((?<=%1$s)|(?=%1$s))";
-        String[] calculationSteps = this.operatorVar.split(String.format(WITH_DELIMITER, "[+-]"));
-        for(int i=0; i<calculationSteps.length; i++) {
-            switch(calculationSteps[i]) {
-                case "+":
-                    numberVar += Double.parseDouble(calculationSteps[++i]);
-                    break;
-                case "-":
-                    numberVar -= Double.parseDouble(calculationSteps[++i]);
-                    break;
-                default:
-                    numberVar = Double.parseDouble(calculationSteps[i]);
-                    break;
-            }
-        }
-        System.out.println(numberVar);
+    public void simpleEvaluate() {
+        Expression expresion = new ExpressionBuilder(operatorVar).build();
+        numberVar = expresion.evaluate();
     }
 }
